@@ -1,15 +1,26 @@
 <template>
   <v-container>
-    <v-layout row wrap>
+    <v-layout row wrap v-if="!started">
       <v-flex xs12>
         <v-btn block dark @click="start">Start</v-btn>
       </v-flex>
-      <v-flex xs12>
+    </v-layout>
+    <v-layout row wrap v-if="started">
+      <v-flex xs12 sm6>
+        <v-btn block dark @click="next">Next Day
+          <v-avatar>{{ day }}</v-avatar>
+        </v-btn>
+      </v-flex>
+      <v-flex xs12 sm6>
+        <v-btn block dark @click="reset">Reset</v-btn>
+      </v-flex>
+      <v-flex xs12 class="text-xs-left">
+        <div class="title mb-3 mt-3">Characters</div>
         <v-layout row wrap>
           <v-flex xs12 sm6 md3 v-for="(character, characterIndex) in characters" :key="characterIndex">
             <v-card>
               <v-card-title primary-title>
-                <div class="text-xs-left">
+                <div>
                   <h3 class="headline mb-0">{{ character.name }}</h3>
                   <div>
                     <p>Health: {{ character.health }}</p>
@@ -35,13 +46,22 @@ export default {
   components: {
   },
   computed: {
-    ...mapGetters(['characters'])
+    ...mapGetters(['characters', 'day', 'started'])
+  },
+  data () {
+    return { }
   },
   methods: {
-    ...mapActions(['startGame']),
+    ...mapActions(['startGame', 'resetGame', 'nextDay']),
     start () {
       // this.$store.dispatch('startGame')
       this.startGame()
+    },
+    next () {
+      this.nextDay()
+    },
+    reset () {
+      this.resetGame()
     }
   }
 }
