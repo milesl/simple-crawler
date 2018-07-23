@@ -34,6 +34,26 @@
           </v-flex>
         </v-layout>
       </v-flex>
+      <v-flex xs12 class="text-xs-left">
+        <div class="title mb-3 mt-3">Monsters</div>
+        <v-layout row wrap>
+          <v-flex xs12 sm6 md3 v-for="(monster, monsterIndex) in monsters" :key="monsterIndex">
+            <v-card>
+              <v-card-title primary-title>
+                <div>
+                  <h3 class="headline mb-0">{{ monster.name }}</h3>
+                  <div>
+                    <p>Health: {{ monster.health }}</p>
+                    <div>
+                      <v-btn v-for="(skill, skillIndex) in monster.skills" :key="skillIndex">{{ skill.name }}</v-btn>
+                    </div>
+                  </div>
+                </div>
+              </v-card-title>
+            </v-card>
+          </v-flex>
+        </v-layout>
+      </v-flex>
     </v-layout>
   </v-container>
 </template>
@@ -46,7 +66,7 @@ export default {
   components: {
   },
   computed: {
-    ...mapGetters(['characters', 'day', 'started'])
+    ...mapGetters(['characters', 'monsters', 'day', 'started'])
   },
   data () {
     return { }
