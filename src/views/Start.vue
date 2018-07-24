@@ -15,6 +15,19 @@
         <v-btn block dark @click="reset">Reset</v-btn>
       </v-flex>
       <v-flex xs12 class="text-xs-left">
+        <div class="title mb-3 mt-3">Turns</div>
+        <v-layout wrap row>
+          <v-flex xs12>
+            <v-badge overlap v-for="(turn, index) in turnSequence" :key="index" class="mr-2 mb-2">
+              <span slot="badge">{{ turn.turnSequence }}</span>
+              <v-avatar :color="turn.type === 'monster' ? 'red' : 'green'">
+                <span class="white--text headline">{{ turn.initials }}</span>
+              </v-avatar>
+             </v-badge>
+          </v-flex>
+        </v-layout>
+      </v-flex>
+      <v-flex xs12 class="text-xs-left">
         <div class="title mb-3 mt-3">Characters</div>
         <v-layout row wrap>
           <v-flex xs12 sm6 md3 v-for="(character, characterIndex) in characters" :key="characterIndex">
@@ -84,7 +97,7 @@ export default {
   components: {
   },
   computed: {
-    ...mapGetters(['characters', 'monsters', 'day', 'started'])
+    ...mapGetters(['characters', 'monsters', 'day', 'started', 'turnSequence'])
   },
   data () {
     return { }

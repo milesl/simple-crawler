@@ -74,6 +74,11 @@ export default new Vuex.Store({
     },
     started: state => {
       return state.started
+    },
+    turnSequence: state => {
+      var characterTurns = state.characters.map((c) => { return { turnSequence: c.turnSequence, initials: c.name.match(/\b\w/g).join(''), type: 'character' } })
+      var monsterTurns = state.monsters.map((m) => { return { turnSequence: m.turnSequence, initials: m.name.match(/\b\w/g).join(''), type: 'monster' } })
+      return characterTurns.concat(monsterTurns).sort((a, b) => a.turnSequence - b.turnSequence)
     }
   }
 })
