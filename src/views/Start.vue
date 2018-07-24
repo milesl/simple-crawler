@@ -20,15 +20,24 @@
           <v-flex xs12 sm6 md3 v-for="(character, characterIndex) in characters" :key="characterIndex">
             <v-card>
               <v-card-title primary-title>
-                <div>
-                  <h3 class="headline mb-0">{{ character.name }}</h3>
-                  <div>
-                    <p>Health: {{ character.health }}</p>
-                    <div>
-                      <v-btn v-for="(skill, skillIndex) in character.skills" :key="skillIndex">{{ skill.name }}</v-btn>
-                    </div>
-                  </div>
-                </div>
+                <v-layout row wrap>
+                  <v-flex xs12>
+                    <h3 class="headline mb-0">
+                      {{ character.name }}
+                    </h3>
+                  </v-flex>
+                  <v-flex xs12>
+                    <v-chip color="teal" text-color="white">
+                      {{ character.turnSequence }} Turn
+                    </v-chip>
+                    <v-chip color="green" text-color="white">
+                      {{ character.health }} Health
+                    </v-chip>
+                  </v-flex>
+                  <v-flex xs12>
+                    <v-btn v-for="(skill, skillIndex) in character.skills" :key="skillIndex">{{ skill.name }}</v-btn>
+                  </v-flex>
+                </v-layout>
               </v-card-title>
             </v-card>
           </v-flex>
@@ -40,15 +49,24 @@
           <v-flex xs12 sm6 md3 v-for="(monster, monsterIndex) in monsters" :key="monsterIndex">
             <v-card>
               <v-card-title primary-title>
-                <div>
-                  <h3 class="headline mb-0">{{ monster.name }}</h3>
-                  <div>
-                    <p>Health: {{ monster.health }}</p>
-                    <div>
-                      <v-btn v-for="(skill, skillIndex) in monster.skills" :key="skillIndex">{{ skill.name }}</v-btn>
-                    </div>
-                  </div>
-                </div>
+                <v-layout row wrap>
+                  <v-flex xs12>
+                    <h3 class="headline mb-0">
+                      {{ monster.name }}
+                    </h3>
+                  </v-flex>
+                  <v-flex xs12>
+                    <v-chip color="teal" text-color="white">
+                      {{ monster.turnSequence }} Turn
+                    </v-chip>
+                    <v-chip color="green" text-color="white">
+                      {{ monster.health }} Health
+                    </v-chip>
+                  </v-flex>
+                  <v-flex xs12>
+                    <v-btn v-for="(skill, skillIndex) in monster.skills" :key="skillIndex">{{ skill.name }}</v-btn>
+                  </v-flex>
+                </v-layout>
               </v-card-title>
             </v-card>
           </v-flex>
@@ -74,7 +92,6 @@ export default {
   methods: {
     ...mapActions(['startGame', 'resetGame', 'nextDay']),
     start () {
-      // this.$store.dispatch('startGame')
       this.startGame()
     },
     next () {

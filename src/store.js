@@ -9,7 +9,7 @@ export default new Vuex.Store({
   state: {
     characters: [],
     monsters: [],
-    day: 1,
+    day: 0,
     started: false
   },
   mutations: {
@@ -27,23 +27,39 @@ export default new Vuex.Store({
     },
     setDay (state, day) {
       state.day = day
+    },
+    shuffleTurnSquence (state) {
+      var totalTurns = new Array(state.characters.length + state.monsters.length - 1 + 1).fill().map((_, idx) => 1 + idx)
+      state.characters.forEach(function (element, index, array) {
+        var turn = Math.floor(Math.random() * totalTurns.length)
+        state.characters[index].turnSequence = totalTurns[turn]
+        totalTurns.splice(turn, 1)
+      })
+      state.monsters.forEach(function (element, index, array) {
+        var turn = Math.floor(Math.random() * totalTurns.length)
+        state.monsters[index].turnSequence = totalTurns[turn]
+        totalTurns.splice(turn, 1)
+      })
     }
   },
   actions: {
     startGame ({ dispatch, commit }) {
       var game = gameService.generateGame()
       commit('setCharacters', game.characters)
-      commit('setMonsters', game.monsters)
       commit('setStarted', true)
+      dispatch('nextDay')
     },
     resetGame ({ dispatch, commit }) {
       commit('setCharacters', [])
+      commit('setMonsters', [])
       commit('setStarted', false)
-      commit('setDay', 1)
+      commit('setDay', 0)
     },
     nextDay ({ dispatch, commit }) {
-      // generate a monster
+      var day = gameService.generateNextDay()
+      commit('setMonsters', day.monsters)
       commit('incrementDay')
+      commit('shuffleTurnSquence')
     }
   },
   getters: {
